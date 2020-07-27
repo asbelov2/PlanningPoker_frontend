@@ -1,0 +1,252 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.main{
+    /*max-width: 900px;*/
+    background-color: lightgoldenrodyellow;
+    margin: 0 auto;
+    padding: 0px 30px 0px 30px;
+}
+
+.header{
+    height: 100px;
+    background-color: white;
+}
+
+.body{
+    background-color: lightgray;
+    height: 800px;
+}
+
+.room-name{
+    float: left; 
+    color: rgb(81,159,233);
+    font-size: 36px;
+    line-height: 90px;
+    width: 60%;
+}
+
+.cardboard{
+    float: left;
+    width: 70%;
+    padding-right: 32px;
+    box-sizing: border-box;
+}
+
+.rightpanel{
+    float: right;
+    width: 30%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.room-panel{
+    border: 1px solid rgb(81,159,233);
+}
+
+button.mybutton{
+    background-color: white;
+    color: rgb(81,159,233);
+    border-width: 1px;
+    border-color: rgb(81,159,233);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button.mybutton.mybutton-medium {
+    width: 114px;
+    height: 30px;
+    margin-top: 34px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+button.mybutton.mybutton-high {
+    width: 256px;
+    height: 30px;
+    
+}
+
+.mybutton:hover, .mybutton:focus {
+    border-color: white;
+    color: white;
+    background-color: rgb(81,159,233);
+    outline: none;
+}
+
+.card{
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgb(81,159,233);
+    border-radius: 5px;
+}
+
+.profile{
+    float: right;
+    color: black;
+    font-size: x-large;
+    width: 40%;
+    line-height: 90px;
+    text-align: right;
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+
+.profile img{
+    vertical-align: -10%;
+    margin-left: 10px;
+}
+
+.profile-icon{
+    width: 40px; 
+    border: none;
+}
+
+.story{
+    font-size: 18px;
+    background-color:rgba(144, 238, 144, 0.5);
+}
+
+.status{
+    font-size: 12px;
+    text-align: center;
+    color: white;
+    line-height: 46px;
+    background-color: rgb(81,159,233);
+}
+
+.timer{
+    line-height: 48px;
+    background-color: white;
+}
+.timer::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+
+.remains{
+    float: left;
+    width: 30%;
+    padding-left: 17px;
+    box-sizing: border-box;
+}
+
+.time{
+    float: right;
+    width: 70%;
+    text-align: right;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+.users{
+    background-color: white;
+}
+
+.user{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    padding-left: 19px;
+    line-height: 53px;
+}
+
+.user .img{
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    margin-right: 12px;
+    line-height: 32px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: lightgray;
+    text-align: center;
+    position: relative;
+}
+
+.user .img img{
+    max-width: 65%;
+    vertical-align: -20%;
+}
+
+.user .dot{
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    right: 0px;
+    bottom: 0px;
+}
+
+.user .dot.dot-red{
+    background-color: #EE3434;
+}
+
+.user .dot.dot-green{
+    background-color: #34CD40;
+}
+
+.time-buttons{
+    height: 118px;
+}
+
+.invite-member{
+}
+
+.invite-head{
+    font-size: 18px;
+}
+
+.invite-description{
+    font-size: 12px;
+    color: lightgray;
+}
