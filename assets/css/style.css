@@ -51,7 +51,6 @@ body{
 
 .main{
     /*max-width: 900px;*/
-    background-color: lightgoldenrodyellow;
     margin: 0 auto;
     padding: 0px 30px 0px 30px;
 }
@@ -62,71 +61,16 @@ body{
 }
 
 .body{
-    background-color: lightgray;
+    background-color: #EEF3F8;
     height: 800px;
 }
 
 .room-name{
     float: left; 
     color: rgb(81,159,233);
-    font-size: 36px;
+    font-size: 24px;
     line-height: 90px;
     width: 60%;
-}
-
-.cardboard{
-    float: left;
-    width: 70%;
-    padding-right: 32px;
-    box-sizing: border-box;
-}
-
-.rightpanel{
-    float: right;
-    width: 30%;
-    box-sizing: border-box;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.room-panel{
-    border: 1px solid rgb(81,159,233);
-}
-
-button.mybutton{
-    background-color: white;
-    color: rgb(81,159,233);
-    border-width: 1px;
-    border-color: rgb(81,159,233);
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-button.mybutton.mybutton-medium {
-    width: 114px;
-    height: 30px;
-    margin-top: 34px;
-    margin-left: 8px;
-    margin-right: 8px;
-}
-
-button.mybutton.mybutton-high {
-    width: 256px;
-    height: 30px;
-    
-}
-
-.mybutton:hover, .mybutton:focus {
-    border-color: white;
-    color: white;
-    background-color: rgb(81,159,233);
-    outline: none;
-}
-
-.card{
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgb(81,159,233);
-    border-radius: 5px;
 }
 
 .profile{
@@ -153,7 +97,40 @@ button.mybutton.mybutton-high {
 
 .story{
     font-size: 18px;
-    background-color:rgba(144, 238, 144, 0.5);
+    line-height: 65px;
+    padding-left: 32px;
+}
+
+.cardboard{
+    float: left;
+    width: 65%;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.card{
+    float: left;
+    width: 106px;
+    height: 141px;
+    border: 1px solid rgb(81,159,233);
+    border-radius: 5px;
+    margin: 6px;
+    background-color: white;
+}
+
+.rightpanel{
+    float: right;
+    width: 35%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 288px;
+}
+
+.room-panel{
+    border: 1px solid rgb(81,159,233);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .status{
@@ -195,7 +172,6 @@ button.mybutton.mybutton-high {
 
 .user{
     border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
     padding-left: 19px;
     line-height: 53px;
 }
@@ -235,18 +211,61 @@ button.mybutton.mybutton-high {
     background-color: #34CD40;
 }
 
+button.mybutton{
+    background-color: white;
+    color: rgb(81,159,233);
+    border-width: 1px;
+    border-color: rgb(81,159,233);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.mybutton.mybutton-medium {
+    width: 114px;
+    height: 30px;
+    margin-top: 30px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+button.mybutton.mybutton-high {
+    width: 256px;
+    height: 30px;
+}
+
+.mybutton:hover, .mybutton:focus {
+    border-color: white;
+    color: white;
+    background-color: rgb(81,159,233);
+    outline: none;
+}
+
 .time-buttons{
+    border-top: 1px solid lightgray;
+    background-color: white;
     height: 118px;
+    padding: 4px;
 }
 
 .invite-member{
+    border: 1px solid rgb(81,159,233);
+    border-radius: 5px;
+    background-color: white;
+    margin-top: 24px;
+    height: 138px;
+    padding: 16px;
 }
 
 .invite-head{
     font-size: 18px;
+    height: 46px;
+    text-align: center;
+    line-height: 46px;
 }
 
 .invite-description{
     font-size: 12px;
+    height: 46px;
+    text-align: center;
     color: lightgray;
 }
