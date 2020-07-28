@@ -1,0 +1,48 @@
+.cardboard{
+    float: left;
+    width: 65%;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.card{
+    padding: 4px;
+    float: left;
+    width: 106px;
+    height: 141px;
+    border: 1px solid rgb(81,159,233);
+    border-radius: 5px;
+    margin: 6px;
+    background-color: white;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.card:hover {
+    border-color: white;
+    color: white;
+    background-color: rgb(81,159,233);
+    outline: none;
+}
+
+.card-inner-border{
+    margin: 8px 12px 8px 12px;
+    width: 71px;
+    height: 94px;
+    border: 1px solid #D7DBE0;
+    border-radius: 5px;
+    line-height: 94px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.card-corner-number{
+    transform: rotate(180deg);
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    font-size: 10px;
+}

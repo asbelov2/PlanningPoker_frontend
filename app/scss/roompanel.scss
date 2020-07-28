@@ -1,0 +1,129 @@
+.rightpanel{
+    float: right;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 288px;
+}
+
+.room-panel{
+    border: 1px solid rgb(81,159,233);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.status{
+    font-size: 12px;
+    text-align: center;
+    color: white;
+    line-height: 46px;
+    background-color: rgb(81,159,233);
+}
+
+.timer{
+    line-height: 48px;
+    background-color: white;
+}
+.timer::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+
+.remains{
+    float: left;
+    width: 30%;
+    padding-left: 17px;
+    box-sizing: border-box;
+}
+
+.time{
+    float: right;
+    font-weight: bold;
+    color: rgb(81,159,233);
+    width: 70%;
+    text-align: right;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+.users{
+    background-color: white;
+}
+
+.user{
+    border-top: 1px solid lightgray;
+    padding-left: 19px;
+    line-height: 53px;
+}
+
+.user .img{
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    margin-right: 12px;
+    line-height: 32px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: lightgray;
+    text-align: center;
+    position: relative;
+}
+
+.user .img img{
+    max-width: 65%;
+    vertical-align: -20%;
+}
+
+.user .dot{
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    right: 0px;
+    bottom: 0px;
+}
+
+.user .dot.dot-red{
+    background-color: #EE3434;
+}
+
+.user .dot.dot-green{
+    background-color: #34CD40;
+}
+
+button.mybutton{
+    background-color: white;
+    color: rgb(81,159,233);
+    border-width: 1px;
+    border-color: rgb(81,159,233);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.mybutton.mybutton-medium {
+    width: 114px;
+    height: 30px;
+    margin-top: 30px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+button.mybutton.mybutton-high {
+    width: 256px;
+    height: 30px;
+}
+
+.mybutton:hover, .mybutton:focus {
+    border-color: white;
+    color: white;
+    background-color: rgb(81,159,233);
+    outline: none;
+}
+
+.time-buttons{
+    border-top: 1px solid lightgray;
+    background-color: white;
+    height: 118px;
+    padding: 4px;
+}

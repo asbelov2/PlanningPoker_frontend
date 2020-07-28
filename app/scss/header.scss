@@ -1,0 +1,29 @@
+.room-name{
+    float: left; 
+    color: rgb(81,159,233);
+    font-size: 24px;
+    line-height: 90px;
+    width: 60%;
+}
+
+.profile{
+    float: right;
+    color: black;
+    font-size: x-large;
+    width: 40%;
+    line-height: 90px;
+    text-align: right;
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+
+.profile img{
+    vertical-align: -10%;
+    margin-left: 10px;
+}
+
+.profile-icon{
+    width: 40px; 
+    border: none;
+}

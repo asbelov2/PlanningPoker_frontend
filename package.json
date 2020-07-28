@@ -19,12 +19,22 @@
   "homepage": "https://github.com/asbelov2/PlanningPoker_frontend#readme",
   "devDependencies": {
     "babel-eslint": "9.0.0",
+    "browser-sync": "^2.26.12",
     "eslint": "5.5.0",
     "eslint-config-defaults": "9.0.0",
     "eslint-plugin-compat": "3.3.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-react": "7.11.1",
-    "eslint-plugin-unicorn": "6.0.1"
+    "eslint-plugin-unicorn": "6.0.1",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  },
+  "dependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-pug": "^4.0.1",
+    "node-notifier": "^7.0.2"
   }
 }
