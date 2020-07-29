@@ -1,6 +1,6 @@
 .stories{
-    float: left;
-    width: 65%;
+    width: 100%;
+    min-width: 600px;
     box-sizing: border-box;
     border: 1px solid rgb(81,159,233);
     border-radius: 5px;
@@ -13,23 +13,29 @@
 }
 
 .story-panel{
+    display: flex;
+    justify-content: space-between;
     height: 48px;
     border-bottom: 1px solid #D7DBE0;
 }
 
-.story-tab-active{
-    border-bottom: 2px solid rgb(81,159,233);
+.story-tabs{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .story-tab{
     cursor: pointer;
-    float: left;
-    box-sizing: border-box;
     height: 48px;
     line-height: 48px;
-    width: 22%;
+    min-width: 100px;
     font-size: 12px;
     text-align: center;
+}
+
+.story-tab-active{
+    border-bottom: 2px solid rgb(81,159,233);
 }
 
 .story-panel-buttons{
@@ -46,10 +52,14 @@
 }
 
 .story-content{
+    display: flex;
+    flex-direction: column;
     height: 130px;
 }
 
 .story-element{
+    display: flex;
+    justify-content: space-between;
     line-height: 50px;
     padding-left: 15px;
     padding-right: 15px;
@@ -62,13 +72,10 @@
 }
 
 .story-element-text{
-    width: 95%;
     float: left;
 }
 
 .story-element-delete{
     cursor: pointer;
-    width: 5%;
     text-align: end;
-    float: right;
 }

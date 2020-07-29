@@ -9,16 +9,35 @@ html(lang='en')
     body
         div.main
             div.header
-                div.room-name h1 Room for sprint 1
+                div.room-name 
+                    h1 Room for sprint 1
                 div.profile Username 
-                    img(class='profile-icon', src='images/user.png')
+                    div.img
+                        img(class='profile-icon', src='images/user.png')
+                
+            div.story Story: "Выбрать карту"
             div.body
-                div.story Story: "Выбрать карту"
-                div.cardboard     
-                    each val in cardvalues
-                        div.card= val
-                            div.card-inner-border= val
-                            div.card-corner-number= val
+                div.mainblock
+                    div.cardboard     
+                        each val in cardvalues
+                            div.card= val
+                                div.card-inner-border= val
+                                div.card-corner-number= val
+                                    div.story-wrap
+                    div.stories
+                        div.story-panel
+                            div.story-tabs
+                                div.story-tab.story-tab-active Active Stories
+                                div.story-tab Complited Stories
+                            div.story-panel-buttons
+                                div.story-panel-button 📝 Edit
+                                div.story-panel-button ➕ New
+                        div.story-content
+                            div.story-element.story-element-active
+                                div.story-element-text Выбрать карту     
+                            div.story-element
+                                div.story-element-text Пригласить участника
+                                div.story-element-delete 🗑
                 div.rightpanel
                     div.room-panel
                         div.status Waiting for Username to vote
@@ -29,7 +48,7 @@ html(lang='en')
                             each usr in users
                                 div.user
                                     div.img
-                                        img(class="profile-icon" src="images/user.png")
+                                        img(class="user-icon" src="images/user.png")
                                         if usr.ready
                                             div.dot.dot-green
                                         else
@@ -41,21 +60,8 @@ html(lang='en')
                     div.invite-member
                         p.invite-head Invite new member
                         p.invite-description Copy room url to clipboard and send it to new member
-                        button.mybutton.mybutton-high Copy url
-                div.story-wrap
-                    div.stories
-                        div.story-panel
-                            div.story-tab.story-tab-active Active Stories
-                            div.story-tab Complited Stories
-                            div.story-panel-buttons
-                                div.story-panel-button 📝 Edit
-                                div.story-panel-button ➕ New
-                        div.story-content
-                            div.story-element.story-element-active
-                                div.story-element-text Выбрать карту     
-                            div.story-element
-                                div.story-element-text Пригласить участника
-                                div.story-element-delete 🗑
+                        div.mybutton-high-wrap
+                            button.mybutton.mybutton-high Copy url
                 
             
                     

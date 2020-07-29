@@ -6,7 +6,6 @@ const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const concat = require('gulp-concat');
 
-//compile scss into css
 function style() {
   return gulp.src('app/scss/*.scss')
     .pipe(plumber({
@@ -24,8 +23,6 @@ function html() {
       errorHandler: notify.onError()
     }))
     .pipe(pug({
-      // Your options in here. for example:
-  
         doctype: 'html',
         pretty: true
   

@@ -1,11 +1,11 @@
 .invite-member{
+    display: flex;
+    flex-direction: column;
     border: 1px solid rgb(81,159,233);
     border-radius: 5px;
     background-color: white;
     margin-top: 24px;
     height: 138px;
-    padding: 16px;
-    margin-bottom: 24px;
 }
 
 .invite-head{
@@ -20,4 +20,14 @@
     height: 46px;
     text-align: center;
     color: lightgray;
+}
+
+.mybutton-high-wrap{
+    display: flex;
+    justify-content: center;
+}
+
+button.mybutton.mybutton-high {
+    width: 256px;
+    height: 30px;
 }

@@ -18,12 +18,23 @@
     padding-right: 20px;
 }
 
-.profile img{
-    vertical-align: -10%;
-    margin-left: 10px;
-}
-
 .profile-icon{
     width: 40px; 
     border: none;
+}
+
+.profile .img{
+    vertical-align: -10%;
+    margin-left: 10px;
+    vertical-align: middle;
+    line-height: 40px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: lightgray;
+    text-align: center;
+}
+
+.profile .img img{
+    max-width: 65%;
+    vertical-align: -10%;
 }

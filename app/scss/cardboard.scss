@@ -1,6 +1,10 @@
 .cardboard{
-    float: left;
-    width: 65%;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    min-width: 600px;
     padding: 32px;
     box-sizing: border-box;
 }

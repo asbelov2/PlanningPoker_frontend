@@ -9,18 +9,40 @@ body{
 }
 
 .header{
+    display: flex;
+    flex-wrap: nowrap;
     height: 100px;
     padding: 0px 116px 0px 124px;
     background-color: white;
 }
 
 .body{
-    height: 800px;
-    padding: 0px 116px 0px 92px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0px 116px 0px 124px;
+}
+
+.mainblock
+{
+    display: flex;
+    flex-direction: column;
+    width: 65%;
 }
 
 .story{
     font-size: 18px;
     line-height: 65px;
-    padding-left: 32px;
+    padding: 0px 116px 0px 124px;
+}
+
+.rightpanel{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 288px;
+    min-width: 288px;
+    margin: 16px 0px 16px 0px;
 }
