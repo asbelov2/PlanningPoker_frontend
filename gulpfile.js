@@ -4,21 +4,19 @@ const pug = require('gulp-pug');
 const browserSync = require('browser-sync').create();
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
-const concat = require('gulp-concat');
 
 function style() {
-  return gulp.src('app/scss/*.scss')
+  return gulp.src('app/scss/style.scss')
     .pipe(plumber({
       errorHandler: notify.onError()
     }))
     .pipe(sass())
-    .pipe(concat('style.css'))
     .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
 }
 
 function html() {
-  return gulp.src('app/pug/*.pug')
+  return gulp.src('app/pug/index.pug')
     .pipe(plumber({
       errorHandler: notify.onError()
     }))
@@ -45,10 +43,11 @@ function watch() {
   });
   gulp.watch('app/scss/*.scss', style);
   gulp.watch('app/images/*.png', images);
-  gulp.watch('app/pug/*.pug', html);
+  gulp.watch('app/pug/**/*.pug', html);
   gulp.watch('dist/*.html').on('change', browserSync.reload);
 }
 
 exports.style = style;
 exports.pug = html;
 exports.watch = watch;
+exports.default = gulp.parallel(style, html, watch);

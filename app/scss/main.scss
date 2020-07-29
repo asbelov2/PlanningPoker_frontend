@@ -4,37 +4,60 @@ body{
 }
 
 .main{
-    /*max-width: 900px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 0 auto;
 }
 
-.header{
+.header-wrap{
     display: flex;
-    flex-wrap: nowrap;
-    height: 100px;
-    padding: 0px 116px 0px 124px;
+    justify-content: center;
     background-color: white;
+    width: 100%;
+}
+
+.header{
+    max-width: 1170px;
+    width: 1170px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    height: 100px;
+    padding: 0px 16px 0px 16px;
 }
 
 .body{
+    max-width: 1170px;
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-flow: column wrap;
     justify-content: space-between;
-    padding: 0px 116px 0px 124px;
+    padding: 0px 16px 0px 16px;
 }
 
 .mainblock
 {
     display: flex;
-    flex-direction: column;
-    width: 65%;
+    flex-flow: row wrap;
+    justify-content: space-between;
 }
 
 .story{
-    font-size: 18px;
+    display: flex;
+    align-self: flex-start;
+    font-size: 24px;
     line-height: 65px;
-    padding: 0px 116px 0px 124px;
+}
+
+.cardboard{
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 75%;
+    padding: 16px;
+    box-sizing: border-box;
 }
 
 .rightpanel{
@@ -42,7 +65,7 @@ body{
     flex-direction: column;
     border-radius: 5px;
     overflow: hidden;
-    width: 288px;
+    width: 25%;
     min-width: 288px;
     margin: 16px 0px 16px 0px;
 }

@@ -6,6 +6,7 @@
     border-radius: 5px;
     background-color: white;
     overflow: hidden;
+    margin-bottom: 24px;
 }
 
 .story-wrap{
@@ -15,7 +16,7 @@
 .story-panel{
     display: flex;
     justify-content: space-between;
-    height: 48px;
+    min-height: 48px;
     border-bottom: 1px solid #D7DBE0;
 }
 
@@ -55,15 +56,14 @@
     display: flex;
     flex-direction: column;
     height: 130px;
+    overflow: auto;
 }
 
 .story-element{
     display: flex;
     justify-content: space-between;
-    line-height: 50px;
-    padding-left: 15px;
-    padding-right: 15px;
-    height: 50px;
+    line-height: 1.2;
+    padding: 15px;
     border-bottom: 1px solid #D7DBE0;
 }
 
@@ -72,10 +72,11 @@
 }
 
 .story-element-text{
-    float: left;
+    width: 95%;
+    text-align: left;
 }
 
 .story-element-delete{
     cursor: pointer;
-    text-align: end;
+    text-align: right;
 }

@@ -1,5 +1,3 @@
-- var cardvalues = ['0','1/2','1','2','3','5','8','13','20','40','100','?','☕'];
-- var users = [{ready: false, name: 'Username'}, {ready: true, name: 'AnotherUser'}]
 html(lang='en')
     head
         meta(charset='UTF-8')
@@ -8,60 +6,12 @@ html(lang='en')
         link(rel='stylesheet',href='css/style.css')
     body
         div.main
-            div.header
-                div.room-name 
-                    h1 Room for sprint 1
-                div.profile Username 
-                    div.img
-                        img(class='profile-icon', src='images/user.png')
-                
-            div.story Story: "Выбрать карту"
+            include elements/header
             div.body
+                div.story Story: "Выбрать карту"
                 div.mainblock
-                    div.cardboard     
-                        each val in cardvalues
-                            div.card= val
-                                div.card-inner-border= val
-                                div.card-corner-number= val
-                                    div.story-wrap
-                    div.stories
-                        div.story-panel
-                            div.story-tabs
-                                div.story-tab.story-tab-active Active Stories
-                                div.story-tab Complited Stories
-                            div.story-panel-buttons
-                                div.story-panel-button 📝 Edit
-                                div.story-panel-button ➕ New
-                        div.story-content
-                            div.story-element.story-element-active
-                                div.story-element-text Выбрать карту     
-                            div.story-element
-                                div.story-element-text Пригласить участника
-                                div.story-element-delete 🗑
-                div.rightpanel
-                    div.room-panel
-                        div.status Waiting for Username to vote
-                        div.timer
-                            div.remains Remains
-                            div.time ⏰ 00:04:44
-                        div.users
-                            each usr in users
-                                div.user
-                                    div.img
-                                        img(class="user-icon" src="images/user.png")
-                                        if usr.ready
-                                            div.dot.dot-green
-                                        else
-                                            div.dot.dot-red
-                                    = usr.name
-                        div.time-buttons
-                            button.mybutton.mybutton-medium Reset timer
-                            button.mybutton.mybutton-medium Finish
-                    div.invite-member
-                        p.invite-head Invite new member
-                        p.invite-description Copy room url to clipboard and send it to new member
-                        div.mybutton-high-wrap
-                            button.mybutton.mybutton-high Copy url
-                
-            
-                    
+                    include elements/cardboard
+                    div.rightpanel
+                        include elements/roompanel
+                        include elements/invitepanel
+                include elements/storypanel

@@ -1,19 +1,8 @@
-.cardboard{
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    min-width: 600px;
-    padding: 32px;
-    box-sizing: border-box;
-}
-
 .card{
     padding: 4px;
     float: left;
-    width: 106px;
-    height: 141px;
+    width: 133px;
+    height: 176px;
     border: 1px solid rgb(81,159,233);
     border-radius: 5px;
     margin: 6px;
@@ -21,7 +10,7 @@
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
-    font-size: 10px;
+    font-size: 14px;
     cursor: pointer;
 }
 
@@ -33,9 +22,9 @@
 }
 
 .card-inner-border{
-    margin: 8px 12px 8px 12px;
-    width: 71px;
-    height: 94px;
+    margin: 10px 16px 10px 16px;
+    width: 90px;
+    height: 118px;
     border: 1px solid #D7DBE0;
     border-radius: 5px;
     line-height: 94px;
@@ -48,5 +37,5 @@
     position: absolute;
     right: 4px;
     bottom: 4px;
-    font-size: 10px;
+    font-size: 14px;
 }

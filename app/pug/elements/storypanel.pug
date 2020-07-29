@@ -1,0 +1,20 @@
+- var stories = [{active: true, text: 'Выбрать карту'}, {active: false, text: 'Пригласить участника'}, {active: false, text: 'Antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that antoher long story that'},  {active: false, text: 'Cool story'}]                
+div.stories
+    div.story-panel
+        div.story-tabs
+            div.story-tab.story-tab-active Active Stories
+            div.story-tab Complited Stories
+        div.story-panel-buttons
+                div.story-panel-button 📝 Edit
+                div.story-panel-button ➕ New
+    div.story-content 
+        each story in stories
+            if story.active
+                div.story-element.story-element-active
+                    div.story-element-text 
+                        = story.text
+            else
+                div.story-element
+                    div.story-element-text 
+                        = story.text
+                    div.story-element-delete 🗑
