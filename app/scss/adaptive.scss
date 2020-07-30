@@ -40,6 +40,18 @@
         width: 100%;
         box-sizing: border-box;
     }
+
+    .story-content{
+        display: flex;
+        flex-direction: column;
+        height: 130px;
+        overflow: auto;
+    }
+
+    .mainblock{
+        width: 100%;
+        padding-right: 0px;
+    }
 }
 
 @media (max-width: 991.98px) {

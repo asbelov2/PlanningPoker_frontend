@@ -9,9 +9,10 @@ html(lang='en')
             include elements/header
             div.body
                 div.story Story: "Выбрать карту"
-                div.mainblock
-                    include elements/cardboard
+                div.content
+                    div.mainblock
+                        include elements/cardboard
+                        include elements/storypanel
                     div.rightpanel
-                        include elements/roompanel
-                        include elements/invitepanel
-                include elements/storypanel
+                            include elements/roompanel
+                            include elements/invitepanel

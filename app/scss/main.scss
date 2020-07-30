@@ -35,10 +35,18 @@ body{
     padding: 0px 16px 0px 16px;
 }
 
-.mainblock
-{
+.content{
     display: flex;
     flex-flow: row wrap;
+}
+
+.mainblock
+{
+    box-sizing: border-box;
+    width: 75%;
+    padding-right: 24px;
+    display: flex;
+    flex-flow: column wrap;
     justify-content: space-between;
 }
 
@@ -55,12 +63,13 @@ body{
     align-content: flex-start;
     flex-wrap: wrap;
     justify-content: center;
-    width: 75%;
+    width: 100%;
     padding: 16px;
     box-sizing: border-box;
 }
 
 .rightpanel{
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
