@@ -50,4 +50,4 @@ function watch() {
 exports.style = style;
 exports.pug = html;
 exports.watch = watch;
-exports.default = gulp.parallel(style, html, watch);
+exports.default = gulp.parallel(style, html, watch, images);
