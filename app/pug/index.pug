@@ -5,6 +5,7 @@ html(lang='en')
         title Planning poker
         link(rel='stylesheet',href='css/style.css')
     body
+        script(type="text/javascript" src="index.min.js")
         div.main
             include elements/header
             div.body
@@ -16,3 +17,6 @@ html(lang='en')
                     div.rightpanel
                             include elements/roompanel
                             include elements/invitepanel
+        include elements/createroom
+        include elements/login
+

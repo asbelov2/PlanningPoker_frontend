@@ -1,0 +1,12 @@
+form(id="create-room")
+    div.room-create
+        div.room-create-roomname Room name
+            input(type="text", name="Room name")
+        div.room-create-username Your name
+            input(type="text", name="User name")
+        div.room-create-deck
+            select(name="deck", required)
+                option() Default
+                option() Only numbers
+        div.room-create-button
+            input(type="submit", value="Create room")

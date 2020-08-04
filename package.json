@@ -28,13 +28,25 @@
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-unicorn": "6.0.1",
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.1.0"
+    "gulp-buffer": "0.0.2",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.8.4",
+    "@aspnet/signalr": "^1.1.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.1",
     "gulp-concat": "^2.6.1",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-pug": "^4.0.1",
+    "jshint": "^2.11.2",
     "node-notifier": "^7.0.2"
   }
 }
