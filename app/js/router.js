@@ -71,7 +71,7 @@ class Router {
     interval = () => {
         if (this.current === this.getFragment()) return;
         this.current = this.getFragment();
-
+        
         this.routes.some(route => {
             const match = this.current.match(route.path);
             if (match) {

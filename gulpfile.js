@@ -13,21 +13,27 @@ const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 
 function js() {
-  return browserify('app/js/app.js', { debug: true })
-  .transform(babelify, { 
-      presets: ['@babel/preset-env'], 
-      plugins: ['@babel/transform-runtime',  '@babel/plugin-proposal-class-properties'], 
+  return browserify('app/js/app.js', {
+      debug: true
+    })
+    .transform(babelify, {
+      presets: ['@babel/preset-env'],
+      plugins: ['@babel/transform-runtime', '@babel/plugin-proposal-class-properties'],
       sourceMaps: true
-   })
-  .bundle()
-  .pipe(source('build.js'))
-  .pipe(buffer())
-  .pipe(rename('index.min.js'))
-  .pipe(sourcemaps.init({loadMaps: true}))
-  .pipe(uglify())
-  .pipe(sourcemaps.write('/'))
-  .pipe(gulp.dest('dist/'))
-  .pipe(browserSync.reload({ stream: true }))
+    })
+    .bundle()
+    .pipe(source('build.js'))
+    .pipe(buffer())
+    .pipe(rename('index.min.js'))
+    .pipe(sourcemaps.init({
+      loadMaps: true
+    }))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('/'))
+    .pipe(gulp.dest('dist/'))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
 }
 
 function style() {
@@ -46,9 +52,9 @@ function html() {
       errorHandler: notify.onError()
     }))
     .pipe(pug({
-        doctype: 'html',
-        pretty: true
-  
+      doctype: 'html',
+      pretty: true
+
     }))
     .pipe(gulp.dest('dist/'))
     .pipe(browserSync.stream());

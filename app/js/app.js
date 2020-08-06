@@ -1,67 +1,99 @@
 import Router from './router';
-import * as signalR from '@aspnet/signalr';
-import {
-  StartConnection,
-} from './signalr';
+import Render from './render';
+import * as SignalR from '@microsoft/signalr';
 
-let username = '';
+async function mainFunction() {
+  console.log('123');
 
-(async () => {let hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl("http://localhost:44356/roomhub", {
+  const connection = new SignalR.HubConnectionBuilder()
+    .withUrl("https://localhost:44356/roomhub", {
       skipNegotiation: false,
-      transport: signalR.HttpTransportType.WebSockets
+      transport: SignalR.HttpTransportType.WebSockets
     })
+    .withAutomaticReconnect()
     .build();
-    hubConnection.serverTimeoutInMilliseconds = 1000 * 1;
-    console.log(hubConnection);
-    console.log(hubConnection.id);
-    var connection = await hubConnection.start();
+    
+  let connectionId = '';
 
-    console.log('123');
-    console.log(connection);
-  })()
-
-const router = new Router({
-  mode: 'hash',
-  root: '/'
-});
-
-router
-  .add('index', () => {
-    alert('welcome in about page');
-    document.getElementsByClassName('main')[0].style.display = "flex";
-  })
-
-  .add('roomlogin',async () => {
-
-    HideByClass('main');
-    HideByID('create-room');
-    document.getElementById('login').style.display = "block";
-
-    console.log('Login room page');
-  })
-
-  .add('room', () => {
-    HideByID('login');
-    HideByID('create-room');
-    document.getElementsByClassName('main')[0].style.display = "flex";
-    console.log('Create room page');
-  })
-
-  .add('', () => {
-    HideByClass('main');
-    HideByID('login');
-    console.log('Create room page');
+  const router = new Router({
+    mode: 'hash',
+    root: '/'
   });
 
-function HideByID(element_id) {
-  if (document.getElementById(element_id)) {
-    document.getElementById(element_id).style.display = 'none';
-  } else alert("Элемент с id: " + element_id + " не найден!");
+  router
+    .add('roomlogin', () => {
+      console.log('welcome in room-login page');
+      render.RenderLoginPage();
+
+      document.getElementById("login-button").addEventListener("click", function (e) {
+        let username = '';
+        username = document.getElementById("login-name").value;
+        connection.invoke("Login", username);
+        document.getElementById("profile-name").innerHTML = username;
+      });
+    })
+
+    .add('room', () => {
+      console.log('welcome in room page');
+      render.RenderRoomPage();
+    })
+
+    .add('', async () => {
+      console.log('welcome in room-create page');
+      render.RenderCreateRoomPage();
+      let roomname = '';
+      let username = '';
+      let deck = '';
+      document.getElementById("create-room-button").addEventListener("click", async function (e) {
+        console.log('123');
+        document.getElementById("profile-name").innerHTML = username;
+        roomname = document.getElementById("create-room-name").value;
+        username = document.getElementById("create-room-username").value;
+        await connection.invoke("Login", username);
+        let user;
+        await fetch(`https://localhost:44356/api/user/GetByConnectionId?connectionId=${connectionId}`, {
+            method: 'GET',
+          })
+          .then(async response => {
+              if (response.status !== 200)
+                console.log(`Looks like there was a problem. Status Code: ${response.status}`);
+              console.log(response);
+              return await response.json();
+            })
+            .then(data => {
+              user = data;
+            })
+          .catch(err => {
+            throw(err);
+          });
+        
+        console.log(user);
+
+        fetch(`https://localhost:44356/api/room?hostId=${user.id}&name=${roomname}&password=&cardInterpretation=days`, {
+            method: 'POST',
+          })
+          .then(
+            function (response) {
+              if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                  response.status);
+                return;
+              }
+            }
+          )
+          .catch(function (err) {
+            console.log('Fetch 2 Error:', err);
+          });
+      });
+    });
+
+  connection.start().then(function () {
+  connectionId = connection.connectionId;
+  let render = new Render(connection);
+
+  })
 }
 
-function HideByClass(element_class) {
-  if (document.getElementsByClassName(element_class)) {
-    document.getElementsByClassName(element_class)[0].style.display = 'none';
-  } else alert("Элемент с class: " + element_class + " не найден!");
-}
+(async () => {
+  await mainFunction();
+})();
