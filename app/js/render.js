@@ -5,7 +5,7 @@ class Render {
         this.connection = hubConnection;
     }
 
-    RenderLoginPage() {
+    async RenderLoginPage() {
         HideByClass('main');
         HideByID('create-room');
         document.getElementById('login').style.display = "block";
@@ -15,8 +15,6 @@ class Render {
         HideByClass('main');
         HideByID('login');
         document.getElementById('create-room').style.display = "block";
-        console.log('welcome in room-create page');
-        render.RenderCreateRoomPage();
         let roomname = '';
         let username = '';
         let deck = '';
@@ -25,7 +23,7 @@ class Render {
             document.getElementById("profile-name").innerHTML = username;
             roomname = document.getElementById("create-room-name").value;
             username = document.getElementById("create-room-username").value;
-            await connection.invoke("Login", username);
+            await this.connection.invoke("Login", username);
             let user;
             await fetch(`https://localhost:44356/api/user/GetByConnectionId?connectionId=${connectionId}`, {
                     method: 'GET',
