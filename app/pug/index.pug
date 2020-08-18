@@ -13,10 +13,13 @@ html(lang='en')
                 div.content
                     div.mainblock
                         include elements/cardboard
+                        div.infoblock
+                            include elements/roundresult
+                            include elements/waiting
                         include elements/storypanel
                     div.rightpanel
                             include elements/roompanel
                             include elements/invitepanel
         include elements/createroom
         include elements/login
-
+    include elements/templates

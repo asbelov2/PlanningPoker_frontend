@@ -1,56 +1,43 @@
 import Router from './router';
 import Render from './render';
-import * as SignalR from '@microsoft/signalr';
+import SignalR from './signalr';
+import Api from './api';
+import Store from './store';
+import Handlers from './handlers'
 
 async function mainFunction() {
-  let render;
-
-  const connection = new SignalR.HubConnectionBuilder()
-    .withUrl("https://localhost:44356/roomhub", {
-      skipNegotiation: false,
-      transport: SignalR.HttpTransportType.WebSockets
-    })
-    .withAutomaticReconnect()
-    .build();
-
-  let connectionId = '';
-
-  const router = new Router({
-    mode: 'hash',
-    root: '/'
-  });
-
-  await connection.start().then(() => {
-    connectionId = connection.connectionId;
-  })
-
-  render = new Render(connection);
+  const roomId = '';
+  const signalR = SignalR.instance;
+  const render = new Render();
+  const api = new Api();
+  const store = Store.instance;
+  const router = Router.instance;
+  Handlers.initHandlers();
 
   router
-    .add('/roomlogin/', async () => {
+    .add('roomlogin', async () => {
       console.log('welcome in room-login page');
       await render.RenderLoginPage();
-
-      document.getElementById("login-button").addEventListener("click", function (e) {
-        let username = '';
-        username = document.getElementById("login-name").value;
-        connection.invoke("Login", username);
-        document.getElementById("profile-name").innerHTML = username;
-      });
     })
 
-    .add('/room/', async () => {
+    .add('roomlobby', async () => {
       console.log('welcome in room page');
-      await render.RenderRoomPage();
+      await Render.RenderRoomPage();
     })
 
-    .add('/roomcreate/', async () => {
+    .add('roomcreate', async () => {
       console.log('welcome in room-create page');
       await render.RenderCreateRoomPage();
     })
 
+    .add(/roomenter.*/, async() => {
+      store.roomId = window.location.href.match(/(?<=#roomenter).*/)[0];
+      console.log(store.roomId);
+      router.navigate('roomlogin');
+    })
+
     .add('', async () => {
-      router.navigate('/roomcreate/');
+      router.navigate('roomcreate');
     });
 }
 

@@ -1,11 +1,15 @@
 div#create-room
     div.room-create-roomname Room name
         input(type="text", name="Room name", id="create-room-name")
+    div.room-create-password Password
+        input(type="password", name="Room password", id="create-room-password")
+    div.room-create-cardInterpretation Cards interpretation
+        input(type="text", name="Cards interpretation", id="create-room-cardInterpretation")
     div.room-create-username Your name
         input(type="text", name="User name", id="create-room-username")
-    div.room-create-deck
-        select(name="deck", required)
-            option() Default
-            option() Only numbers
+    div.room-create-deck Deck
+        select(id="create-room-deck", name="deck", required)
+            option() DefaultDeck
+            option() deck
     div.room-create-button
-        button(id="create-room-button") Create room
+        button#create-room-button Create room

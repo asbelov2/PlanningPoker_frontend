@@ -52,6 +52,13 @@
         width: 100%;
         padding-right: 0px;
     }
+
+    .infoblock{
+        display: flex;
+        height: 600px;
+        width: 100%;
+        padding: 0;
+    }
 }
 
 @media (max-width: 849.98px) {
@@ -79,6 +86,13 @@
 
     .rightpanel{
         margin-bottom: 24px;
+    }
+
+    .infoblock{
+        display: flex;
+        height: 600px;
+        width: 100%;
+        padding: 0;
     }
 }
 
@@ -115,10 +129,22 @@
         margin: 0;
         margin-bottom: 24px;
     }
+    .infoblock{
+        display: flex;
+        height: 600px;
+        width: 100%;
+        padding: 0;
+    }
 }
 
 @media (max-width: 424.98px) {
     .story-tab{
         font-size: 10px;
+    }
+    .infoblock{
+        display: flex;
+        height: 50px;
+        width: 100%;
+        padding: 0;
     }
 }

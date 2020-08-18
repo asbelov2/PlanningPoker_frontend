@@ -1,87 +1,90 @@
 class Router {
-    routes = [];
+  routes = [];
 
-    mode = null;
+  mode = null;
 
-    root = '/';
+  root = '/';
 
-    constructor(options) {
-        this.mode = window.history.pushState ? 'history' : 'hash';
-        if (options.mode) this.mode = options.mode;
-        if (options.root) this.root = options.root;
-        this.listen();
+  current = '';
+
+  constructor(marker) {
+    if (marker !== singletonMarker)
+      throw new Error('Use instance property');
+    this.mode = 'hash';
+    this.root = '/';
+    this.listen();
+  }
+
+  add = (path, cb) => {
+    this.routes.push({
+      path,
+      cb
+    });
+    console.log(`[router] added ${path}`)
+    return this;
+  };
+
+  remove = path => {
+    for (let i = 0; i < this.routes.length; i += 1) {
+      if (this.routes[i].path === path) {
+        this.routes.slice(i, 1);
+        return this;
+      }
     }
+    return this;
+  };
 
-    add = (path, cb) => {
-        this.routes.push({
-            path,
-            cb
-        });
-        return this;
-    };
+  flush = () => {
+    this.routes = [];
+    return this;
+  };
 
-    remove = path => {
-        for (let i = 0; i < this.routes.length; i += 1) {
-            if (this.routes[i].path === path) {
-                this.routes.slice(i, 1);
-                return this;
-            }
-        }
-        return this;
-    };
+  clearSlashes = path =>
+    path
+    .toString()
+    .replace(/\/$/, '')
+    .replace(/^\//, '');
 
-    flush = () => {
-        this.routes = [];
-        return this;
-    };
+  getFragment = () => {
+    let fragment = '';
+    const match = window.location.href.match(/#(.*)$/);
+    fragment = match ? match[1] : '';
+    return this.clearSlashes(fragment);
+  };
 
-    clearSlashes = path =>
-        path
-        .toString()
-        .replace(/\/$/, '')
-        .replace(/^\//, '');
+  navigate = (path = '') => {
+    console.log(`[router] navigating to ${path}`);
+    window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${path}`;
+  };
 
-    getFragment = () => {
-        let fragment = '';
-        if (this.mode === 'history') {
-            fragment = this.clearSlashes(decodeURI(window.location.pathname + window.location.search));
-            fragment = fragment.replace(/\?(.*)$/, '');
-            fragment = this.root !== '/' ? fragment.replace(this.root, '') : fragment;
-        } else {
-            const match = window.location.href.match(/#(.*)$/);
-            fragment = match ? match[1] : '';
-        }
-        return this.clearSlashes(fragment);
-    };
+  listen = () => {
+    clearInterval(this.interval);
+    this.interval = setInterval(this.interval, 50);
+  };
 
-    navigate = (path = '') => {
-        if (this.mode === 'history') {
-            window.history.pushState(null, null, this.root + this.clearSlashes(path));
-        } else {
-            window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${path}`;
-        }
-        return this;
-    };
+  interval = () => {
+    if(!(window.location.href.match(/#/)))
+      this.navigate('roomcreate');
+    if (this.current === this.getFragment())
+      return;
+    this.current = this.getFragment();
+    this.routes.some(route => {
+      const match = this.current.match(route.path);
+      if (match) {
+        match.shift();
+        route.cb.apply({}, match);
+        return match;
+      }
+      return false;
+    });
+  };
 
-    listen = () => {
-        clearInterval(this.interval);
-        this.interval = setInterval(this.interval, 50);
-    };
-
-    interval = () => {
-        if (this.current === this.getFragment()) return;
-        this.current = this.getFragment();
-        
-        this.routes.some(route => {
-            const match = this.current.match(route.path);
-            if (match) {
-                match.shift();
-                route.cb.apply({}, match);
-                return match;
-            }
-            return false;
-        });
-    };
+  static get instance() {
+    if (!this._instance)
+      this._instance = new Router(singletonMarker);
+    return this._instance;
+  }
 }
 
+const singletonMarker = {};
 export default Router;

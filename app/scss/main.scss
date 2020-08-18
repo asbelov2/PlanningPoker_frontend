@@ -58,7 +58,7 @@ body{
 }
 
 .cardboard{
-    display: flex;
+    display: none;
     align-items: flex-start;
     align-content: flex-start;
     flex-wrap: wrap;
@@ -66,6 +66,41 @@ body{
     width: 100%;
     padding: 16px;
     box-sizing: border-box;
+}
+
+.infoblock{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width:100%;
+    //width: 870px;
+    padding: 0px 0px 16px 0px;
+    box-sizing: border-box;
+    flex-basis: 50%;
+}
+
+.roundresult-window{
+    display: none;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: white;
+    border: 1px solid rgb(81,159,233);
+    border-radius: 10px;
+    min-height: 600px;
+}
+
+.waiting-round-window{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    background-color: white;
+    border: 1px solid rgb(81,159,233);
+    border-radius: 10px;
+    min-height: 600px;
 }
 
 .rightpanel{

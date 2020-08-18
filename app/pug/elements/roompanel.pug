@@ -1,19 +1,10 @@
-- var users = [{ready: false, name: 'Username'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'Longuuuuuuuusernaaaaaaaaaaame-longuuuuuuuusernaaaaaaaaaaame'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}, {ready: true, name: 'AnotherUser'}]                
 div.room-panel
     div.status Waiting for Username to vote
     div.timer
         div.remains Remains
-        div.time ⏰ 00:04:44
-    div.users
-        each usr in users
-            div.user
-                div.img
-                    img(class="user-icon" src="images/user.png")
-                    if usr.ready
-                        div.dot.dot-green
-                    else
-                        div.dot.dot-red
-                = usr.name
+        div.time ⏰ 00:00:00
+    div.users   
     div.time-buttons
-        button.mybutton.mybutton-medium Reset timer
-        button.mybutton.mybutton-medium Finish
+        button.mybutton.mybutton-medium#start-round Start round
+        button.mybutton.mybutton-medium#reset-timer Reset timer
+        button.mybutton.mybutton-medium#finish-round Finish

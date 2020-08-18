@@ -1,24 +1,26 @@
-import * as SignalR from '@microsoft/signalr';
+import * as signalR from '@microsoft/signalr';
 
 class SignalR {
-    connection;
-    connectionId;
+    connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:44356/roomhub", {
+            skipNegotiation: false,
+            transport: signalR.HttpTransportType.WebSockets
+        })
+        .withAutomaticReconnect()
+        .build();
 
-    constructor() {
-        if (!this.connection) {
-            connection = new SignalR.HubConnectionBuilder()
-                .withUrl("https://localhost:44356/roomhub", {
-                    skipNegotiation: false,
-                    transport: SignalR.HttpTransportType.WebSockets
-                })
-                .withAutomaticReconnect()
-                .build();
-            await connection.start().then(() => {
-                connectionId = connection.connectionId;
-            })
-        }
-        return this.connection;
+    constructor(marker) {
+        if (marker !== singletonMarker)
+            throw new Error('Use instance property');
+        this.connection.start();
+
+        return this;
+    }
+    static get instance() {
+        if (!this._instance)
+            this._instance = new SignalR(singletonMarker);
+        return this._instance;
     }
 }
-
+const singletonMarker = {};
 export default SignalR;
