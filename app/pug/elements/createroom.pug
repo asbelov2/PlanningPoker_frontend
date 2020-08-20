@@ -1,15 +1,18 @@
-div#create-room
-    div.room-create-roomname Room name
+div.create-room#create-room
+    div.room-create-field#room-create-roomname 
+        span Room name
         input(type="text", name="Room name", id="create-room-name")
-    div.room-create-password Password
+    div.room-create-field#room-create-password 
+        span Password
         input(type="password", name="Room password", id="create-room-password")
-    div.room-create-cardInterpretation Cards interpretation
+    div.room-create-field#room-create-cardInterpretation
+        span Cards interpretation
         input(type="text", name="Cards interpretation", id="create-room-cardInterpretation")
-    div.room-create-username Your name
+    div.room-create-field#room-create-username
+        span Your name
         input(type="text", name="User name", id="create-room-username")
-    div.room-create-deck Deck
+    div.room-create-field#room-create-deck
+        span Deck
         select(id="create-room-deck", name="deck", required)
-            option() DefaultDeck
-            option() deck
     div.room-create-button
-        button#create-room-button Create room
+        button.mybutton.mybutton-medium#create-room-button Create room

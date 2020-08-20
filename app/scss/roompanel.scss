@@ -15,7 +15,7 @@
 .timer{
     display: flex;
     flex-wrap: nowrap;
-    line-height: 48px;
+    line-height: 28px;
     background-color: white;
 }
 .timer::after {
@@ -25,20 +25,30 @@
 }
 
 .remains{
-    float: left;
-    width: 30%;
-    padding-left: 17px;
+    display: flex;
+    width: 100%;
+    padding: 15px;
     box-sizing: border-box;
 }
 
 .time{
-    float: right;
+    //font-weight: bold;
+    //color: rgb(81,159,233);
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.time-set{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.time-value{
     font-weight: bold;
     color: rgb(81,159,233);
-    width: 70%;
-    text-align: right;
-    padding-right: 15px;
-    box-sizing: border-box;
 }
 
 .users{

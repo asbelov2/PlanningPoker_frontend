@@ -54,10 +54,9 @@
     }
 
     .infoblock{
-        display: flex;
-        height: 600px;
+        height:50%;
         width: 100%;
-        padding: 0;
+        //padding: 0;
     }
 }
 
@@ -89,10 +88,7 @@
     }
 
     .infoblock{
-        display: flex;
-        height: 600px;
         width: 100%;
-        padding: 0;
     }
 }
 
@@ -129,22 +125,10 @@
         margin: 0;
         margin-bottom: 24px;
     }
-    .infoblock{
-        display: flex;
-        height: 600px;
-        width: 100%;
-        padding: 0;
-    }
 }
 
 @media (max-width: 424.98px) {
     .story-tab{
         font-size: 10px;
-    }
-    .infoblock{
-        display: flex;
-        height: 50px;
-        width: 100%;
-        padding: 0;
     }
 }

@@ -20,7 +20,6 @@ class Router {
       path,
       cb
     });
-    console.log(`[router] added ${path}`)
     return this;
   };
 
@@ -53,7 +52,6 @@ class Router {
   };
 
   navigate = (path = '') => {
-    console.log(`[router] navigating to ${path}`);
     window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${path}`;
   };
 

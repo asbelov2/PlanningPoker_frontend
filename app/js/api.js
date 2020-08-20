@@ -41,7 +41,6 @@ class API {
             `${path}/${id}`, 
             (pathAfterId == '') ? '' : `/${pathAfterId}`, 
             ((Object.keys(parameters).length > 0) ? `?${argumentString}` : ''));
-        console.log(url);
         await fetch(url, {
                 method: method,
             })
@@ -49,7 +48,6 @@ class API {
                 if (!response.ok) {
                     throw new Error(`HTTP status ${response.status}`);
                 }
-                console.log(response);
                 if (method == 'GET')
                     data = await response.json();
             })

@@ -1,7 +1,9 @@
-div#login
-    div.login-name Name
-        input(type="text", id='login-name')
-    div.room-create-password Password
-        input(type="password", name="Room password", id="login-password")
+div.login#login
+    div.login-field 
+        span Name
+        input#login-name(type="text")
+    div.login-field
+        span Password
+        input#login-password(type="password", name="Room password")
     div.login-button
-        button#login-button Log in
+        button.mybutton.mybutton-medium#login-button Log in

@@ -12,21 +12,11 @@ class Store {
   room;
   round;
   deck;
+  roundTime;
+  title;
+  selectedCard;
   roomId = '';
-
-  addUser(user) {
-    this.users.push(user);
-  }
-
-  isUserReadyToEnterRoom() {
-
-    if (this.user){}
-    else{
-      console.log(`[store] User not ready to enter in room (user=${this.user})`);
-      return false;
-    }
-    return true;
-  }
+  roundId;
 
   static get instance() {
     if (!this._instance)

@@ -14,8 +14,11 @@
     cursor: pointer;
 }
 
+.card-clicked {
+    border: 2px solid lightgreen;
+}
+
 .card:hover {
-    border-color: white;
     color: white;
     background-color: rgb(81,159,233);
     outline: none;

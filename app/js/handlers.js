@@ -14,40 +14,81 @@ class Handlers {
       throw new Error('Use instance property');
   }
 
+  roundTimerId;
+
   static async initHandlers() {
-    // удачный вход
     signalR.connection.on('onLogin', function () {
-      console.log(`[handlers] Succesfully logined`);
     });
 
-    // время вышло
-    signalR.connection.on('onTimeOver', function () {
-      console.log(`[handlers] Time is up`);
-    });
-
-    // все сделали выбор
-    signalR.connection.on('onAllChosed', async function (round) {
-      // let elem = document.createElement("p");
-      // elem.appendChild(document.createTextNode("All chosed(Result: " + round.result + ")"));
-      // var firstElem = document.getElementById("log").firstChild;
-      // document.getElementById("log").insertBefore(elem, firstElem);
-
-      // for (let i = 0; i < round.choices.length; i++) {
-      //   elem = document.createElement("p");
-      //   elem.appendChild(document.createTextNode("User " + round.choices[i].user.name + " has chosed " + round.choices[i].card.name + " card"));
-      //   firstElem = document.getElementById("log").firstChild;
-      //   document.getElementById("log").insertBefore(elem, firstElem);
-      // }
-      console.log(`[handlers] All participants chosed`);
-      console.log(round);
+    signalR.connection.on('onEnd', async function () {
+      HideByID('roundresult-window');
+      HideByID('remains');
+      HideByID('finish-round');
+      ShowByID('waiting-round-window');
+      if (store.user.id === store.room.host.id) {
+        ShowByID('time-set');
+        ShowByID('start-round');
+        ShowByID('story-name-edit');
+        HideByID('story-header');
+        HideByID('reset-timer');
+      }
       store.stories = await api.request('round/RoundResult', 'GET', {
         roomId: store.room.id
-    });
+      });
+      clearInterval(this.roundTimerId);
+      Render.RenderUsers(store.users);
       Render.RenderStories(store.stories);
-      //TODO: сделать
     });
 
-    // пользователь выбрал карту
+    signalR.connection.on('onResetTimer', async function () {
+      clearInterval(this.roundTimerId);
+      store.round = await api.requestWithID('round', 'GET', {}, store.roundId);
+      store.timer = store.round.roundTime;
+      if (store.timer.totalSeconds === 0) {
+        store.timer = {
+          totalSeconds: 0
+        };
+        this.roundTimerId = setInterval(() => {
+            store.timer.totalSeconds += 1;
+            Render.RenderTime(convertTimer(store.timer));
+          },
+          1 * 1000);
+      } else {
+        this.roundTimerId = setInterval(() => {
+            if (store.timer.totalSeconds <= 0) {
+              clearInterval(this.roundTimerId);
+            } else {
+              store.timer.totalSeconds -= 1;
+            }
+            Render.RenderTime(convertTimer(store.timer));
+          },
+          1 * 1000);
+      }
+    });
+
+    signalR.connection.on('onRoundChanged', function (round) {
+      store.round = round;
+    });
+
+    signalR.connection.on('onTimeOver', async function () {
+      document.getElementById('room-panel-status').innerText = 'Time is up!';
+      clearInterval(this.roundTimerId);
+    });
+
+    signalR.connection.on('onAllChosed', async function (round) {
+      HideByID('cardboard');
+      HideByID('waiting-round-window');
+      ShowByID('roundresult-window');
+      ShowByID('infoblock');
+      Render.RenderResult(round);
+      store.stories = await api.request('round/RoundResult', 'GET', {
+        roomId: store.room.id
+      });
+      Render.RenderStories(store.stories);
+      setRoomStatus('Round is over');
+      clearInterval(this.roundTimerId);
+    });
+
     signalR.connection.on('onUserChosed', function (user) {
       console.log(`[handlers] ${user.name} (ID = ${user.id}) chosed card`);
       let dot = document.querySelector(`#${user.id}`).querySelector('.user .img .dot.dot-red');
@@ -55,42 +96,35 @@ class Handlers {
       dot.classList.add('dot-green');
     });
 
-    // выбрана неверная карта
     signalR.connection.on('onWrongCard', function () {
       console.log(`[handlers] Wrong card was chosed`);
     });
 
-    // пользователь не готов
     signalR.connection.on('onUserNotReady', function (id, name) {
       console.log(`[handlers] ${name} (ID = ${id}) is not ready`);
     });
 
-    // пользователь готов
     signalR.connection.on('onUserReady', function (id, name) {
       console.log(`[handlers] ${name} (ID = ${id}) is ready`);
       //TODO: сделать галочку рядом с именем
     });
 
-    // другой пользователь отключился
     signalR.connection.on('onUserDisconnected', function (user, users, roomId) {
       console.log(`[handlers] ${user.name} "(ID = ${user.id}) disconnected from the room with ID = ${roomId}`);
       store.users = users;
       Render.RenderUsers(store.users);
     });
 
-    // другой пользователь подключился
     signalR.connection.on('onUserConnected', function (user, users, roomId) {
       console.log(`[handlers] ${user.name} "(ID = ${user.id}) connected to the room with ID = ${roomId}`);
       store.users = users;
       Render.RenderUsers(store.users);
     });
 
-    // клиент отлючился
     signalR.connection.on('onDisconnected', function () {
       console.log(`[handlers] You were disconnected`);
     });
 
-    // клиент подключился
     signalR.connection.on('onConnected', function (room) {
       console.log(`[handlers] You connected to the room with ID = ${room.id}`);
       store.room = room;
@@ -98,33 +132,49 @@ class Handlers {
       Render.RenderUsers(store.users);
     });
 
-    // стартовал раунд
     signalR.connection.on('onRoundStarted', async function (id) {
-      console.log(`[handlers] Started Round with ID = ${id}`);
+      store.roundId = id;
+      setRoomStatus('Waiting for players to vote');
+      HideByID('infoblock');
+      ShowByID('cardboard');
+      ShowByID('remains');
+      if (store.user.id === store.room.host.id) {
+        HideByID('start-round');
+        HideByID('time-set');
+        HideByID('story-name-edit');
+        ShowByID('story-header');
+        ShowByID('finish-round');
+        ShowByID('reset-timer');
+      }
       store.round = await api.requestWithID('round', 'GET', {}, id);
+      document.getElementById('story-header').innerText = store.round.title;
       store.deck = store.round.deck;
       Render.RenderCards(store.deck);
-      if (store.timer) {
-        store.timer.seconds = 0;
-        let roundTimer = setInterval(() => {
-          store.timer.seconds += 1;
-          Render.RenderTime(convertTimer(store.timer));
-        },
-        1 * 1000);
-      }
-      else {
       store.timer = store.round.roundTime;
-      store.timer.seconds = store.timer.minutes * 60;
-      store.timer.minutes = 0;
-      let roundTimer = setInterval(() => {
-          if (store.timer <= 0) {
-            clearInterval(roundTimer);
-          }
-          store.timer.seconds -= 1;
-          Render.RenderTime(convertTimer(store.timer));
-        },
-        1 * 1000);
+      if (store.timer.totalSeconds === 0) {
+        store.timer = {
+          totalSeconds: 0
+        };
+        this.roundTimerId = setInterval(() => {
+            store.timer.totalSeconds += 1;
+            Render.RenderTime(convertTimer(store.timer));
+          },
+          1 * 1000);
+      } else {
+        this.roundTimerId = setInterval(() => {
+            if (store.timer.totalSeconds <= 0) {
+              clearInterval(this.roundTimerId);
+            } else {
+              store.timer.totalSeconds -= 1;
+            }
+            Render.RenderTime(convertTimer(store.timer));
+          },
+          1 * 1000);
       }
+      store.stories = await api.request('round/RoundResult', 'GET', {
+        roomId: store.room.id
+      });
+      Render.RenderStories(store.stories);
     });
   }
   static get instance() {
@@ -134,13 +184,28 @@ class Handlers {
   }
 }
 
+function setRoomStatus(status) {
+  document.getElementById('room-panel-status').innerText = status;
+}
+
 function convertTimer(timer) {
-  let hours = `${parseInt(timer.seconds/3600)}`.padStart(2, "0");
-  let minutes = `${parseInt(timer.seconds/60)}`.padStart(2, "0");
-  let seconds = `${timer.seconds % 60}`.padStart(2, "0");
+  let hours = `${parseInt(timer.totalSeconds / 3600)}`.padStart(2, "0");
+  let minutes = `${parseInt(timer.totalSeconds / 60)}`.padStart(2, "0");
+  let seconds = `${timer.totalSeconds % 60}`.padStart(2, "0");
   return [hours, minutes, seconds].join(':');
 }
 
+function ShowByID(element_id) {
+  if (document.getElementById(element_id)) {
+    document.getElementById(element_id).style.display = 'flex';
+  } else alert("Элемент с id: " + element_id + " не найден!");
+}
+
+function HideByID(element_id) {
+  if (document.getElementById(element_id)) {
+    document.getElementById(element_id).style.display = 'none';
+  } else alert("Элемент с id: " + element_id + " не найден!");
+}
 
 const singletonMarker = {};
 export default Handlers;

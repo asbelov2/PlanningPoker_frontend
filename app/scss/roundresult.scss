@@ -1,0 +1,56 @@
+.roundresult-average{
+  line-height: 50px;
+}
+
+.roundresult-average-score{
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.roundresult-choices{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.roundresult-field{
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 24px;
+  line-height: 40px;
+}
+
+.roundresult-choice{
+  min-width: 200px;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  line-height: 50px;
+  border: 1px solid rgb(81,159,233);
+  border-radius: 5px;
+  background-color: #EEF3F8;
+}
+
+.roundresult-name{
+  font-size: 24px;
+}
+
+.roundresult-value{
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.mini-card{
+  display: flex;
+  width: 30px;
+  height: 40px;
+  font-size: 12px;
+  line-height: 40px;
+  justify-content: center;
+  border: 1px solid rgb(81,159,233);
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  overflow: hidden;
+}

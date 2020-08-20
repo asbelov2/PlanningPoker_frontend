@@ -16,23 +16,19 @@ async function mainFunction() {
 
   router
     .add('roomlogin', async () => {
-      console.log('welcome in room-login page');
       await render.RenderLoginPage();
     })
 
     .add('roomlobby', async () => {
-      console.log('welcome in room page');
       await Render.RenderRoomPage();
     })
 
     .add('roomcreate', async () => {
-      console.log('welcome in room-create page');
       await render.RenderCreateRoomPage();
     })
 
     .add(/roomenter.*/, async() => {
       store.roomId = window.location.href.match(/(?<=#roomenter).*/)[0];
-      console.log(store.roomId);
       router.navigate('roomlogin');
     })
 

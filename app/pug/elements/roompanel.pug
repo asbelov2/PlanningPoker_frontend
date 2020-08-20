@@ -1,9 +1,14 @@
 div.room-panel
-    div.status Waiting for Username to vote
+    div.status
+        span#room-panel-status Waiting for other players
     div.timer
-        div.remains Remains
-        div.time ⏰ 00:00:00
-    div.users   
+        div.time
+            div.time-set#time-set
+                span.time-set-text Set timer
+                input.time-edit#time-edit(type='time')
+            div.remains#remains Remains
+                span.time-value#time-value ⏰ 00:00:00
+    div.users
     div.time-buttons
         button.mybutton.mybutton-medium#start-round Start round
         button.mybutton.mybutton-medium#reset-timer Reset timer
