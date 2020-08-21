@@ -21,7 +21,7 @@ class Listeners {
         store.username = document.getElementById('login-name').value;
         for (let i = 0; i < store.room.users.length; ++i) {
           if (store.room.users[i].name === store.username) {
-            alert(`Имя ${store.username} уже занято`);
+            alert(`Name '${store.username}' is reserved`);
             return;
           }
         }
