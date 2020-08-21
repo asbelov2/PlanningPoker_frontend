@@ -3,20 +3,17 @@ import Render from './render';
 import SignalR from './signalr';
 import Api from './api';
 import Store from './store';
-import Handlers from './handlers'
+import Handlers from './handlers';
+import Listeners from './listeners';
 
 async function mainFunction() {
-  const roomId = '';
-  const signalR = SignalR.instance;
-  const render = new Render();
-  const api = new Api();
   const store = Store.instance;
   const router = Router.instance;
-  Handlers.initHandlers();
+  await Handlers.initHandlers();
 
   router
     .add('roomlogin', async () => {
-      await render.RenderLoginPage();
+      await Render.RenderLoginPage();
     })
 
     .add('roomlobby', async () => {
@@ -24,7 +21,11 @@ async function mainFunction() {
     })
 
     .add('roomcreate', async () => {
-      await render.RenderCreateRoomPage();
+      await Render.RenderCreateRoomPage();
+    })
+
+    .add('roomdeckcreate', async () => {
+      await Render.RenderDeckCreatePage();
     })
 
     .add(/roomenter.*/, async() => {
@@ -35,6 +36,10 @@ async function mainFunction() {
     .add('', async () => {
       router.navigate('roomcreate');
     });
+
+    Listeners.initAllListeners();
+
+
 }
 
 (async () => {

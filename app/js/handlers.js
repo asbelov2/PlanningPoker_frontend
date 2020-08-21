@@ -4,7 +4,6 @@ import Store from './store';
 import Api from './api';
 
 const signalR = SignalR.instance;
-const render = new Render();
 const store = Store.instance;
 const api = new Api();
 

@@ -9,64 +9,26 @@ const store = Store.instance;
 const router = Router.instance;
 
 class Render {
-    async RenderLoginPage() {
-        HideByClass('main');
-        HideByID('create-room');
-        ShowByID('login');
-        document.getElementById("login-button").addEventListener("click", async function (e) {
-            store.room = await api.requestWithID('room', 'GET', {}, store.roomId);
-            store.username = document.getElementById("login-name").value;
-            for (let i = 0; i < store.room.users.length; ++i) {
-                if (store.room.users[i].name === store.username) {
-                    alert(`Имя ${store.username} уже занято`);
-                    return;
-                }
-            }
-            let password = document.getElementById("login-password").value;
-            signalR.connection.invoke("Login", store.username);
-            document.getElementById("profile-name").innerHTML = store.username;
-            store.user = await api.request('user/GetByConnectionId', 'GET', {
-                connectionId: signalR.connection.connectionId
-            });
-            await api.requestWithID('room', 'POST', {
-                userId: store.user.id,
-                password: password
-            }, store.roomId, 'connect');
-            router.navigate('roomlobby');
-        });
+    constructor(marker) {
+        if (marker !== singletonMarker)
+            throw new Error('Use instance property');
     }
 
-    async RenderCreateRoomPage() {
+    static async RenderLoginPage() {
+        HideByClass('main');
+        HideByID('create-room');
+        HideByID('deck-window');
+        HideByID('card-window');
+        ShowByID('login');
+    }
+
+    static async RenderCreateRoomPage() {
         HideByClass('main');
         HideByID('login');
+        HideByID('deck-window');
+        HideByID('card-window');
         ShowByID('create-room');
-        Render.LoadDecks();
-        document.getElementById("create-room-button").addEventListener("click", async function (e) {
-            let roominfo = ReadRoomInfo();
-            document.getElementById('room-name').innerText = roominfo.roomname;
-            document.getElementById("profile-name").innerText = roominfo.username;
-            if (roominfo.deckId === 'DefaultDeck') {
-                store.deck = await api.request('deck/GetDefault', 'GET', {});
-            } else {
-                store.deck = await api.requestWithID('deck', 'GET', {}, roominfo.deckId);
-            }
-            await signalR.connection.invoke("Login", roominfo.username);
-            store.user = await api.request('user/GetByConnectionId', 'GET', {
-                connectionId: signalR.connection.connectionId
-            });
-            await api.request('room', 'POST', {
-                hostId: store.user.id,
-                name: roominfo.roomname,
-                password: roominfo.password,
-                cardInterpretation: roominfo.cardInterpretation
-            })
-            store.room = await api.request(`room/GetByHostId/${store.user.id}`, 'GET', {});
-            store.roomId = store.room.id;
-            document.getElementById("invite-link").addEventListener("click", async function (e) {
-                navigator.clipboard.writeText(window.location.origin + `/#roomenter${store.roomId}`);
-            });
-            router.navigate(`roomlobby`);
-        })
+        await Render.LoadDecks();
     }
 
     static async RenderRoomPage() {
@@ -78,6 +40,12 @@ class Render {
         HideByID('time-set');
         HideByID('remains');
         HideByID('story-name-edit');
+        HideByID('deck-window');
+        HideByID('card-window');
+        HideByID('cardboard');
+        HideByID('roundresult-window');
+        ShowByID('infoblock');
+        ShowByID('waiting-round-window');
         ShowByID('main');
         store.room = await api.requestWithID('room', 'GET', {}, store.roomId);
         if (store.room.id) {
@@ -90,34 +58,60 @@ class Render {
                 ShowByID('start-round');
                 ShowByID('story-name-edit');
                 HideByID('story-header');
-                document.getElementById('start-round').addEventListener("click", async function (e) {
-                    let seconds = strToSeconds(document.getElementById('time-edit').value)
-                    store.roundTime = seconds / 60;
-                    store.title = document.getElementById('story-name-edit').value;
-                    await api.requestWithID('room', 'POST', {
-                        userId: store.room.host.id,
-                        title: store.title,
-                        deckId: store.deck.id,
-                        roundTimeInMinutes: store.roundTime
-                    }, store.roomId, 'StartRound');
-                    document.getElementById('finish-round').addEventListener("click", async function (e) {
-                        await api.requestWithID('round', 'POST', {
-                            userId: store.user.id,
-                        }, store.round.id, 'EndRound');
-                    });
-                    document.getElementById('reset-timer').addEventListener("click", async function (e) {
-                        await api.requestWithID('round', 'POST', {
-                            userId: store.user.id,
-                        }, store.round.id, 'ResetTimer');
-                        store.timer = null;
-                    });
-                });
             }
             document.getElementById('room-name').innerHTML = store.room.name;
             document.getElementById("profile-name").innerHTML = store.user.name;
             Render.RenderStories(store.stories);
             Render.RenderUsers(store.room.users);
         }
+    }
+
+    static async RenderDeckCreatePage() {
+        HideByClass('main');
+        HideByID('login');
+        HideByID('create-room');
+        HideByID('card-window');
+        ShowByID('deck-window');
+        document.getElementsByClassName('deck-cardboard')[0].innerHTML = '';
+        for (let i = 0; i < store.buildDeck.cards.length; ++i) {
+            let card = document.createElement('div');
+            let spans = document.querySelector('#card').content.querySelectorAll('span');
+            for (let j = 0; j < spans.length; ++j) {
+                spans[j].innerText = store.buildDeck.cards[i].name;
+            }
+            card.innerHTML = document.getElementById('card').innerHTML;
+            card.classList.add('deck-card');
+            card.id = store.buildDeck.cards[i].name;
+            let del = document.createElement('div');
+            del.appendChild(document.createElement('span'))
+            del.querySelector('span').innerText = 'X';
+            del.classList.add('deck-card-delete');
+            del.addEventListener("click", async function (e) {
+                store.buildDeck.cards.splice(i, 1);
+                await Render.RenderDeckCreatePage()
+            });
+            card.appendChild(del);
+            document.getElementsByClassName('deck-cardboard')[0].appendChild(card);
+
+        }
+
+        let card = document.createElement('div');
+        let spans = document.querySelector('#card').content.querySelectorAll('span');
+        for (let j = 0; j < spans.length; ++j) {
+            spans[j].innerText = '+';
+        }
+        card.innerHTML = document.getElementById('card').innerHTML;
+        card.querySelector('.card').id = 'deck-add-card';
+        card.addEventListener("click", async function (e) {
+            await Render.RenderCardAddingPage();
+        });
+        document.getElementsByClassName('deck-cardboard')[0].appendChild(card);
+
+    }
+
+    static async RenderCardAddingPage() {
+        HideByID('deck-window');
+        ShowByID('card-window');
     }
 
     static RenderUsers(users) {
@@ -133,7 +127,7 @@ class Render {
 
     static RenderCards(deck) {
         document.getElementsByClassName('cardboard')[0].innerHTML = '';
-        for (let i = 0; i < store.deck.cards.length; ++i) {
+        for (let i = 0; i < deck.cards.length; ++i) {
             let card = document.createElement('div');
             card.addEventListener("click", async function (e) {
                 await api.requestWithID('round', 'PUT', {
@@ -203,6 +197,12 @@ class Render {
             }
         }
     }
+
+    static get instance() {
+        if (!this._instance)
+            this._instance = new Render(singletonMarker);
+        return this._instance;
+    }
 }
 
 function strToSeconds(str) {
@@ -244,4 +244,5 @@ function ReadRoomInfo() {
     return roominfo;
 }
 
+const singletonMarker = {};
 export default Render;

@@ -9,20 +9,28 @@ class API {
             }
             argumentString = argumentString.slice(0, argumentString.length - 1)
         }
-        await fetch(this.apiURL + ((Object.keys(parameters).length > 0) ? `${path}?${argumentString}` : `${path}`), {
+        let url = '';
+        url = url.concat(
+            this.apiURL, 
+            `${path}`, 
+            ((Object.keys(parameters).length > 0) ? `?${argumentString}` : ''));
+        await fetch(url, {
                 method: method,
             })
             .then(async response => {
                 if (!response.ok) {
                     throw new Error(`HTTP status ${response.status}`);
                 }
-                if (method == 'GET')
-                    data = await response.json();
+                //if (method == 'GET')
+                    data = await response.json()
+                    .catch(err => {
+                        // no data
+                    });
             })
             .catch(err => {
                 throw (err);
             });
-        if (method == 'GET')
+        //if (method == 'GET')
             return data;
     }
 
@@ -48,13 +56,14 @@ class API {
                 if (!response.ok) {
                     throw new Error(`HTTP status ${response.status}`);
                 }
-                if (method == 'GET')
-                    data = await response.json();
+                    data = await response.json()
+                    .catch(err => {
+                        // no data
+                    });
             })
             .catch(err => {
                 throw (err);
             });
-        if (method == 'GET')
             return data;
     }
 }

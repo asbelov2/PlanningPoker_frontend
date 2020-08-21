@@ -1,0 +1,45 @@
+.deck-window{
+  display:flex;
+  margin-top: 6%;
+  height: 300px;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  padding: 15px;
+  background-color: white;
+  border: 1px solid rgb(81,159,233);
+  border-radius: 10px;
+}
+
+.deck-cardboard{
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+#deck-add-card{
+  border-color: green;
+  color: green;
+}
+
+.deck-create-button{
+  display: flex;
+  justify-content: center;
+}
+
+.deck-card{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.deck-card-delete{
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}

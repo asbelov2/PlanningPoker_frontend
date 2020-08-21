@@ -17,6 +17,10 @@ class Store {
   selectedCard;
   roomId = '';
   roundId;
+  buildDeck = {
+    id: '',
+    cards: []
+  };
 
   static get instance() {
     if (!this._instance)
