@@ -6,6 +6,7 @@ class Store {
   users = [];
   decks = [];
   stories = [];
+  userReadiness = [];
 
   timer;
   user;

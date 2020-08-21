@@ -16,10 +16,9 @@ class Handlers {
   roundTimerId;
 
   static async initHandlers() {
-    signalR.connection.on('onLogin', function () {
-    });
+    signalR.connection.on('onLogin', () => {});
 
-    signalR.connection.on('onEnd', async function () {
+    signalR.connection.on('onEnd', async() => {
       HideByID('roundresult-window');
       HideByID('remains');
       HideByID('finish-round');
@@ -39,7 +38,7 @@ class Handlers {
       Render.RenderStories(store.stories);
     });
 
-    signalR.connection.on('onResetTimer', async function () {
+    signalR.connection.on('onResetTimer', async() => {
       clearInterval(this.roundTimerId);
       store.round = await api.requestWithID('round', 'GET', {}, store.roundId);
       store.timer = store.round.roundTime;
@@ -48,33 +47,35 @@ class Handlers {
           totalSeconds: 0
         };
         this.roundTimerId = setInterval(() => {
-            store.timer.totalSeconds += 1;
-            Render.RenderTime(convertTimer(store.timer));
-          },
-          1 * 1000);
-      } else {
+          store.timer.totalSeconds += 1;
+          Render.RenderTime(convertTimer(store.timer));
+        },
+        1 * 1000);
+      }
+      else {
         this.roundTimerId = setInterval(() => {
-            if (store.timer.totalSeconds <= 0) {
-              clearInterval(this.roundTimerId);
-            } else {
-              store.timer.totalSeconds -= 1;
-            }
-            Render.RenderTime(convertTimer(store.timer));
-          },
-          1 * 1000);
+          if (store.timer.totalSeconds <= 0) {
+            clearInterval(this.roundTimerId);
+          }
+          else {
+            store.timer.totalSeconds -= 1;
+          }
+          Render.RenderTime(convertTimer(store.timer));
+        },
+        1 * 1000);
       }
     });
 
-    signalR.connection.on('onRoundChanged', function (round) {
+    signalR.connection.on('onRoundChanged', (round) => {
       store.round = round;
     });
 
-    signalR.connection.on('onTimeOver', async function () {
+    signalR.connection.on('onTimeOver', async() => {
       document.getElementById('room-panel-status').innerText = 'Time is up!';
       clearInterval(this.roundTimerId);
     });
 
-    signalR.connection.on('onAllChosed', async function (round) {
+    signalR.connection.on('onAllChosed', async(round) => {
       HideByID('cardboard');
       HideByID('waiting-round-window');
       ShowByID('roundresult-window');
@@ -88,50 +89,56 @@ class Handlers {
       clearInterval(this.roundTimerId);
     });
 
-    signalR.connection.on('onUserChosed', function (user) {
-      console.log(`[handlers] ${user.name} (ID = ${user.id}) chosed card`);
+    signalR.connection.on('onUserChosed', (user) => {
       let dot = document.querySelector(`#${user.id}`).querySelector('.user .img .dot.dot-red');
       dot.classList.remove('dot-red');
       dot.classList.add('dot-green');
     });
 
-    signalR.connection.on('onWrongCard', function () {
-      console.log(`[handlers] Wrong card was chosed`);
+    signalR.connection.on('onWrongCard', () => {});
+
+    signalR.connection.on('onUserNotReady', (id, name) => {
+      let user = {
+        id: id,
+        name: name
+      };
+      for (let i = 0; i < store.userReadiness.length; ++i) {
+        if (store.userReadiness[i].user === user) {
+          store.userReadiness[i].isReady = false;
+        }
+      }
     });
 
-    signalR.connection.on('onUserNotReady', function (id, name) {
-      console.log(`[handlers] ${name} (ID = ${id}) is not ready`);
+    signalR.connection.on('onUserReady', (id, name) => {
+      store.userReadiness.push({
+        user: {
+          id: id,
+          name: name
+        },
+        isReady: true
+      });
     });
 
-    signalR.connection.on('onUserReady', function (id, name) {
-      console.log(`[handlers] ${name} (ID = ${id}) is ready`);
-      //TODO: сделать галочку рядом с именем
-    });
-
-    signalR.connection.on('onUserDisconnected', function (user, users, roomId) {
-      console.log(`[handlers] ${user.name} "(ID = ${user.id}) disconnected from the room with ID = ${roomId}`);
+    signalR.connection.on('onUserDisconnected', (user, users) => {
       store.users = users;
       Render.RenderUsers(store.users);
     });
 
-    signalR.connection.on('onUserConnected', function (user, users, roomId) {
-      console.log(`[handlers] ${user.name} "(ID = ${user.id}) connected to the room with ID = ${roomId}`);
+    signalR.connection.on('onUserConnected', (user, users) => {
       store.users = users;
       Render.RenderUsers(store.users);
     });
 
-    signalR.connection.on('onDisconnected', function () {
-      console.log(`[handlers] You were disconnected`);
+    signalR.connection.on('onDisconnected', () => {
     });
 
-    signalR.connection.on('onConnected', function (room) {
-      console.log(`[handlers] You connected to the room with ID = ${room.id}`);
+    signalR.connection.on('onConnected', (room) => {
       store.room = room;
       store.users = room.users;
       Render.RenderUsers(store.users);
     });
 
-    signalR.connection.on('onRoundStarted', async function (id) {
+    signalR.connection.on('onRoundStarted', async(id) => {
       store.roundId = id;
       setRoomStatus('Waiting for players to vote');
       HideByID('infoblock');
@@ -155,20 +162,22 @@ class Handlers {
           totalSeconds: 0
         };
         this.roundTimerId = setInterval(() => {
-            store.timer.totalSeconds += 1;
-            Render.RenderTime(convertTimer(store.timer));
-          },
-          1 * 1000);
-      } else {
+          store.timer.totalSeconds += 1;
+          Render.RenderTime(convertTimer(store.timer));
+        },
+        1 * 1000);
+      }
+      else {
         this.roundTimerId = setInterval(() => {
-            if (store.timer.totalSeconds <= 0) {
-              clearInterval(this.roundTimerId);
-            } else {
-              store.timer.totalSeconds -= 1;
-            }
-            Render.RenderTime(convertTimer(store.timer));
-          },
-          1 * 1000);
+          if (store.timer.totalSeconds <= 0) {
+            clearInterval(this.roundTimerId);
+          }
+          else {
+            store.timer.totalSeconds -= 1;
+          }
+          Render.RenderTime(convertTimer(store.timer));
+        },
+        1 * 1000);
       }
       store.stories = await api.request('round/RoundResult', 'GET', {
         roomId: store.room.id
@@ -188,22 +197,24 @@ function setRoomStatus(status) {
 }
 
 function convertTimer(timer) {
-  let hours = `${parseInt(timer.totalSeconds / 3600)}`.padStart(2, "0");
-  let minutes = `${parseInt(timer.totalSeconds / 60)}`.padStart(2, "0");
-  let seconds = `${timer.totalSeconds % 60}`.padStart(2, "0");
-  return [hours, minutes, seconds].join(':');
+  let hours = `${parseInt(timer.totalSeconds / 3600)}`.padStart(2, '0');
+  let minutes = `${parseInt(timer.totalSeconds / 60)}`.padStart(2, '0');
+  let seconds = `${timer.totalSeconds % 60}`.padStart(2, '0');
+  return [ hours, minutes, seconds ].join(':');
 }
 
 function ShowByID(element_id) {
   if (document.getElementById(element_id)) {
     document.getElementById(element_id).style.display = 'flex';
-  } else alert("Элемент с id: " + element_id + " не найден!");
+  }
+  else alert('Элемент с id: ' + element_id + ' не найден!');
 }
 
 function HideByID(element_id) {
   if (document.getElementById(element_id)) {
     document.getElementById(element_id).style.display = 'none';
-  } else alert("Элемент с id: " + element_id + " не найден!");
+  }
+  else alert('Элемент с id: ' + element_id + ' не найден!');
 }
 
 const singletonMarker = {};

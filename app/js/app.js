@@ -1,7 +1,5 @@
 import Router from './router';
 import Render from './render';
-import SignalR from './signalr';
-import Api from './api';
 import Store from './store';
 import Handlers from './handlers';
 import Listeners from './listeners';
@@ -12,19 +10,19 @@ async function mainFunction() {
   await Handlers.initHandlers();
 
   router
-    .add('roomlogin', async () => {
+    .add('roomlogin', async() => {
       await Render.RenderLoginPage();
     })
 
-    .add('roomlobby', async () => {
+    .add('roomlobby', async() => {
       await Render.RenderRoomPage();
     })
 
-    .add('roomcreate', async () => {
+    .add('roomcreate', async() => {
       await Render.RenderCreateRoomPage();
     })
 
-    .add('roomdeckcreate', async () => {
+    .add('roomdeckcreate', async() => {
       await Render.RenderDeckCreatePage();
     })
 
@@ -33,15 +31,13 @@ async function mainFunction() {
       router.navigate('roomlogin');
     })
 
-    .add('', async () => {
+    .add('', async() => {
       router.navigate('roomcreate');
     });
 
-    Listeners.initAllListeners();
-
-
+  Listeners.initAllListeners();
 }
 
-(async () => {
+(async() => {
   await mainFunction();
 })();

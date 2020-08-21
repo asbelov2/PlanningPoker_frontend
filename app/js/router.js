@@ -15,10 +15,10 @@ class Router {
     this.listen();
   }
 
-  add = (path, cb) => {
+  add = (path, cbf) => {
     this.routes.push({
       path,
-      cb
+      cbf
     });
     return this;
   };
@@ -40,9 +40,9 @@ class Router {
 
   clearSlashes = path =>
     path
-    .toString()
-    .replace(/\/$/, '')
-    .replace(/^\//, '');
+      .toString()
+      .replace(/\/$/, '')
+      .replace(/^\//, '');
 
   getFragment = () => {
     let fragment = '';
@@ -61,7 +61,7 @@ class Router {
   };
 
   interval = () => {
-    if(!(window.location.href.match(/#/)))
+    if (!(window.location.href.match(/#/)))
       this.navigate('roomcreate');
     if (this.current === this.getFragment())
       return;
@@ -70,7 +70,7 @@ class Router {
       const match = this.current.match(route.path);
       if (match) {
         match.shift();
-        route.cb.apply({}, match);
+        route.cbf.apply({}, match);
         return match;
       }
       return false;
