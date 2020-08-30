@@ -14,11 +14,11 @@ const sourcemaps = require('gulp-sourcemaps');
 
 function js() {
   return browserify('app/js/app.js', {
-      debug: true
-    })
+    debug: true
+  })
     .transform(babelify, {
-      presets: ['@babel/preset-env'],
-      plugins: ['@babel/transform-runtime', '@babel/plugin-proposal-class-properties'],
+      presets: [ '@babel/preset-env' ],
+      plugins: [ '@babel/transform-runtime', '@babel/plugin-proposal-class-properties' ],
       sourceMaps: true
     })
     .bundle()
@@ -33,7 +33,7 @@ function js() {
     .pipe(gulp.dest('dist/'))
     .pipe(browserSync.reload({
       stream: true
-    }))
+    }));
 }
 
 function style() {
@@ -68,9 +68,10 @@ function images() {
 function watch() {
   browserSync.init({
     server: {
-      baseDir: "dist",
-      index: "index.html"
-    }
+      baseDir: 'dist',
+      index: 'index.html'
+    },
+    ghostMode: false
   });
   gulp.watch('app/scss/*.scss', style);
   gulp.watch('app/images/*.png', images);

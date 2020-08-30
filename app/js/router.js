@@ -1,8 +1,6 @@
 class Router {
   routes = [];
 
-  mode = null;
-
   root = '/';
 
   current = '';
@@ -10,20 +8,18 @@ class Router {
   constructor(marker) {
     if (marker !== singletonMarker)
       throw new Error('Use instance property');
-    this.mode = 'hash';
     this.root = '/';
-    this.listen();
   }
 
-  add = (path, cbf) => {
+  add = (path, callbackFunction) => {
     this.routes.push({
       path,
-      cbf
+      callbackFunction
     });
     return this;
   };
 
-  remove = path => {
+  remove = (path) => {
     for (let i = 0; i < this.routes.length; i += 1) {
       if (this.routes[i].path === path) {
         this.routes.slice(i, 1);
@@ -56,8 +52,39 @@ class Router {
   };
 
   listen = () => {
-    clearInterval(this.interval);
-    this.interval = setInterval(this.interval, 50);
+    this.current = this.getFragment();
+    window.onpopstate = () => {
+      if (!(window.location.href.match(/#/)))
+        this.navigate('roomcreate');
+      this.current = this.getFragment();
+      this.routes.some(route => {
+        const match = this.current.match(route.path);
+        if (match) { 
+          match.shift();
+          route.callbackFunction.apply({}, match);
+          return match;
+        }
+        return false;
+      });
+    };
+    // for (let j = 0; j < this.routes.length; ++j) {
+    //   console.log(this.routes[j]);
+    //   if (this.routes[j].path === this.current) {
+    //     console.log('found');
+    //     this.routes[j].callbackFunction.apply({});
+    //   }
+    // }
+    this.routes.some(route => {
+      const match = this.current.match(route.path);
+      if (match) { 
+        match.shift();
+        route.callbackFunction.apply({}, match);
+        return match;
+      }
+      return false;
+    });
+    // clearInterval(this.interval);
+    // this.interval = setInterval(this.interval, 50);
   };
 
   interval = () => {
@@ -70,7 +97,7 @@ class Router {
       const match = this.current.match(route.path);
       if (match) {
         match.shift();
-        route.cbf.apply({}, match);
+        route.callbackFunction.apply({}, match);
         return match;
       }
       return false;

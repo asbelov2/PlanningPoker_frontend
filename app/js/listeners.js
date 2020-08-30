@@ -14,10 +14,11 @@ class Listeners {
     if (marker !== singletonMarker)
       throw new Error('Use instance property');
   }
+
   static initAllListeners() {
     window.onload = () => {
       document.getElementById('login-button').addEventListener('click', async() => {
-        store.room = await api.requestWithID('room', 'GET', {}, store.roomId);
+        store.room = await api.request('room', 'GET', {}, store.roomId);
         store.username = document.getElementById('login-name').value;
         for (let i = 0; i < store.room.users.length; ++i) {
           if (store.room.users[i].name === store.username) {
@@ -31,7 +32,8 @@ class Listeners {
         store.user = await api.request('user/GetByConnectionId', 'GET', {
           connectionId: signalR.connection.connectionId
         });
-        await api.requestWithID('room', 'POST', {
+        store.writeDataToCookie();
+        await api.request('room', 'POST', {
           userId: store.user.id,
           password: password
         }, store.roomId, 'connect');
@@ -50,7 +52,7 @@ class Listeners {
           store.deck = await api.request('deck/GetDefault', 'GET', {});
         } 
         else {
-          store.deck = await api.requestWithID('deck', 'GET', {}, roominfo.deckId);
+          store.deck = await api.request('deck', 'GET', {}, roominfo.deckId);
         }
         await signalR.connection.invoke('Login', roominfo.username);
         store.user = await api.request('user/GetByConnectionId', 'GET', {
@@ -64,9 +66,7 @@ class Listeners {
         });
         store.room = await api.request(`room/GetByHostId/${store.user.id}`, 'GET', {});
         store.roomId = store.room.id;
-        document.getElementById('invite-link').addEventListener('click', async() => {
-          navigator.clipboard.writeText(window.location.origin + `/#roomenter${store.roomId}`);
-        });
+        store.writeDataToCookie();
         router.navigate('roomlobby');
       });
 
@@ -74,23 +74,25 @@ class Listeners {
         let seconds = strToSeconds(document.getElementById('time-edit').value);
         store.roundTime = seconds / 60;
         store.title = document.getElementById('story-name-edit').value;
-        await api.requestWithID('room', 'POST', {
+        await api.request('room', 'POST', {
           userId: store.room.host.id,
           title: store.title,
           deckId: store.deck.id,
           roundTimeInMinutes: store.roundTime
         }, store.roomId, 'StartRound');
-
+        store.writeDataToCookie();
       });
 
       document.getElementById('finish-round').addEventListener('click', async() => {
-        await api.requestWithID('round', 'POST', {
+        await api.request('round', 'POST', {
           userId: store.user.id,
         }, store.round.id, 'EndRound');
+        store.round = null;
+        store.writeDataToCookie();
       });
 
       document.getElementById('reset-timer').addEventListener('click', async() => {
-        await api.requestWithID('round', 'POST', {
+        await api.request('round', 'POST', {
           userId: store.user.id,
         }, store.round.id, 'ResetTimer');
         store.timer = null;
@@ -102,12 +104,12 @@ class Listeners {
         });
         for (let i = 0; i < store.buildDeck.cards.length; ++i) {
           if (store.buildDeck.cards[i].type === 'valuable') {
-            await api.requestWithID('deck', 'POST', {
+            await api.request('deck', 'POST', {
               value: store.buildDeck.cards[i].value
             }, store.buildDeck.id, 'AddValuableCard');
           } 
           else {
-            await api.requestWithID('deck', 'POST', {
+            await api.request('deck', 'POST', {
               name: store.buildDeck.cards[i].name
             }, store.buildDeck.id, 'AddExceptionalCard');
           }

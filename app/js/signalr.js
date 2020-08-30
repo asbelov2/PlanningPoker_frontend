@@ -12,10 +12,13 @@ class SignalR {
     constructor(marker) {
       if (marker !== singletonMarker)
         throw new Error('Use instance property');
-      this.connection.start();
-
       return this;
     }
+
+    async connect() {
+      await this.connection.start();
+    }
+
     static get instance() {
       if (!this._instance)
         this._instance = new SignalR(singletonMarker);

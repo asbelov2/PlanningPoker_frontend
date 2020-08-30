@@ -3,27 +3,31 @@ import Render from './render';
 import Store from './store';
 import Handlers from './handlers';
 import Listeners from './listeners';
+import SignalR from './signalr';
 
 async function mainFunction() {
+  Listeners.initAllListeners();
+  const signalR = SignalR.instance;
+  await signalR.connect();
   const store = Store.instance;
   const router = Router.instance;
   await Handlers.initHandlers();
 
   router
     .add('roomlogin', async() => {
-      await Render.RenderLoginPage();
+      await Render.renderLoginPage();
     })
 
     .add('roomlobby', async() => {
-      await Render.RenderRoomPage();
+      await Render.renderRoomPage();
     })
 
     .add('roomcreate', async() => {
-      await Render.RenderCreateRoomPage();
+      await Render.renderCreateRoomPage();
     })
 
     .add('roomdeckcreate', async() => {
-      await Render.RenderDeckCreatePage();
+      await Render.renderDeckCreatePage();
     })
 
     .add(/roomenter.*/, async() => {
@@ -35,7 +39,7 @@ async function mainFunction() {
       router.navigate('roomcreate');
     });
 
-  Listeners.initAllListeners();
+  router.listen();
 }
 
 (async() => {
