@@ -157,7 +157,7 @@ class Listeners {
 
 function strToSeconds(str) {
   let myTimeArr = str.split(':');
-  return parseInt(parseInt(myTimeArr[0]) * 60 + parseInt(myTimeArr[1]));
+  return parseInt(parseInt(myTimeArr[0]) * 3600 + parseInt(myTimeArr[1]) * 60 + parseInt(myTimeArr[2]));
 }
 
 function ReadRoomInfo() {

@@ -90,7 +90,7 @@ class Store {
 
 function convertTimer(timer) {
   let hours = `${parseInt(timer.totalSeconds / 3600)}`.padStart(2, '0');
-  let minutes = `${parseInt(timer.totalSeconds / 60)}`.padStart(2, '0');
+  let minutes = `${parseInt((timer.totalSeconds / 60) % 60)}`.padStart(2, '0');
   let seconds = `${timer.totalSeconds % 60}`.padStart(2, '0');
   return [ hours, minutes, seconds ].join(':');
 }
