@@ -67,35 +67,9 @@ class Router {
         return false;
       });
     };
-    // for (let j = 0; j < this.routes.length; ++j) {
-    //   console.log(this.routes[j]);
-    //   if (this.routes[j].path === this.current) {
-    //     console.log('found');
-    //     this.routes[j].callbackFunction.apply({});
-    //   }
-    // }
     this.routes.some(route => {
       const match = this.current.match(route.path);
       if (match) { 
-        match.shift();
-        route.callbackFunction.apply({}, match);
-        return match;
-      }
-      return false;
-    });
-    // clearInterval(this.interval);
-    // this.interval = setInterval(this.interval, 50);
-  };
-
-  interval = () => {
-    if (!(window.location.href.match(/#/)))
-      this.navigate('roomcreate');
-    if (this.current === this.getFragment())
-      return;
-    this.current = this.getFragment();
-    this.routes.some(route => {
-      const match = this.current.match(route.path);
-      if (match) {
         match.shift();
         route.callbackFunction.apply({}, match);
         return match;
